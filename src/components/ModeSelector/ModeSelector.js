@@ -1,11 +1,13 @@
 import React, {useEffect, useState} from "react";
-import Select from 'react-select';
-
+import "./ModeSelector.css"
+import {Col, Button, Alert} from 'reactstrap';
+import Select from 'react-select'
 
 const ModeSelector = (props) => {
 
     const [modes, setModes] = useState(null);
-    const [selectedMode, setSelectedMode] = useState();
+    const [selectedOption, setSelectedOption] = useState(null);
+    const [alert, setAlert] = useState(false);
 
     useEffect(() => {
         if (props.modes && props.modes.length) {
@@ -17,20 +19,42 @@ const ModeSelector = (props) => {
             });
             setModes(options);
         }
-    },[props.modes]);
+    }, [props.modes]);
 
-    const onSelect = (selectedMode) => {
-        setSelectedMode(selectedMode);
-        props.onModeSelect(selectedMode.value)
+    const onSelect = (selectedOption) => {
+        setSelectedOption(selectedOption);
+    }
+
+    const onSubmit = () => {
+        if (selectedOption) {
+            const selectedMode = props.modes.find(item => item.modeName === selectedOption.value);
+            props.onSubmit(selectedMode);
+            setAlert(false)
+        } else {
+            setAlert(true)
+        }
     }
 
     return (
-        <Select
-            value={selectedMode}
-            onChange={(selectedMode) => onSelect(selectedMode)}
-            options={modes}
-            defaultValue={{label: "Pick mode", value: 0}}
-        />
+        <div className="d-flex mb-3">
+            <Col xs="4">
+                <Select
+                    value={selectedOption}
+                    onChange={(selectedOption) => onSelect(selectedOption)}
+                    options={(modes && modes.length) && modes}
+                />
+            </Col>
+
+            <Button color="primary" onClick={() => onSubmit()}>
+                Start
+            </Button>
+            {
+                alert &&
+                <Alert className="alert" color="danger">
+                    Please, choose an option!
+                </Alert>
+            }
+        </div>
     )
 }
 
