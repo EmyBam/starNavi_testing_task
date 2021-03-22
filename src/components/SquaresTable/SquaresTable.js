@@ -2,15 +2,16 @@ import React from "react";
 import "./SquaredTable.css"
 import {Col} from 'reactstrap';
 
+const BLUE_TD_CLASS = "blue-bcg-color";
 
 const SquaresTable = (props) => {
 
     const onTdHover = (id) => {
         const hoveredTd = document.getElementById(id);
-        if (!hoveredTd.classList.contains("blue-bcg-color")) {
-            hoveredTd.classList.add("blue-bcg-color")
+        if (!hoveredTd.classList.contains(BLUE_TD_CLASS)) {
+            hoveredTd.classList.add(BLUE_TD_CLASS)
         } else {
-            hoveredTd.classList.remove("blue-bcg-color")
+            hoveredTd.classList.remove(BLUE_TD_CLASS)
         }
         props.onHover(id);
     }
@@ -38,13 +39,10 @@ const SquaresTable = (props) => {
                         })
                     }
                     </tbody>
-
                 </table>
             }
         </Col>
-
     )
-
 }
 
 export default SquaresTable;
