@@ -1,26 +1,13 @@
-import React, {useState, useEffect} from "react";
+import React from "react";
 import "./SquaredTable.css"
 import {Col} from 'reactstrap';
 
 
 const SquaresTable = (props) => {
 
-    const [filedSize, setFieldSize] = useState([]);
-
-    useEffect(() => {
-        if (props.field && typeof props.field == 'number') {
-            const fieldSizeArr = [];
-            for (let i = 1; i <= props.field; i++) {
-                fieldSizeArr.push(i)
-            }
-            setFieldSize(fieldSizeArr);
-        }
-
-    }, [props.field]);
-
     const onTdHover = (id) => {
         const hoveredTd = document.getElementById(id);
-        if(!hoveredTd.classList.contains("blue-bcg-color")) {
+        if (!hoveredTd.classList.contains("blue-bcg-color")) {
             hoveredTd.classList.add("blue-bcg-color")
         } else {
             hoveredTd.classList.remove("blue-bcg-color")
@@ -31,20 +18,20 @@ const SquaresTable = (props) => {
     return (
         <Col>
             {
-                filedSize &&
+                props.fieldSize &&
                 <table>
                     <tbody>
                     {
-                        filedSize.map(tr => {
-                            return <tr key={tr}>
+                        props.fieldSize.map((tr, index) => {
+                            return <tr key={index}>
                                 {
-                                    filedSize.map(td => {
+                                    props.fieldSize.map((td, index) => {
                                         return <td id={`r${tr}c${td}`}
-                                                   key={td}
+                                                   key={index}
                                                    className="table-cell"
                                                    onMouseOver={() => onTdHover(`r${tr}c${td}`)}
 
-                                        ></td>
+                                        />
                                     })
                                 }
                             </tr>

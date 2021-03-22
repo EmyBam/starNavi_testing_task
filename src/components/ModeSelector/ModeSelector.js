@@ -38,11 +38,14 @@ const ModeSelector = (props) => {
     return (
         <div className="d-flex mb-3">
             <Col xs="4">
-                <Select
-                    value={selectedOption}
-                    onChange={(selectedOption) => onSelect(selectedOption)}
-                    options={(modes && modes.length) && modes}
-                />
+                {
+                    modes &&
+                    <Select
+                        value={selectedOption}
+                        onChange={(selectedOption) => onSelect(selectedOption)}
+                        options={(modes && modes.length) && modes}
+                    />
+                }
             </Col>
 
             <Button color="primary" onClick={() => onSubmit()}>
